@@ -1,0 +1,7 @@
+git status to see the status.
+git add to add files for a commit.
+git commit to make a version.
+git push to put them on GitHub/the server.
+git pull to get new changes.
+
+NOTE! Always do git pull before pushing (or at least make sure you have the latest changes).
