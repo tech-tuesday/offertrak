@@ -1,6 +1,6 @@
 <?php
   session_start();
-  include_once $_SERVER['DOCUMENT_ROOT'] . '/bdpa-loans/db.php';
+  include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/web-assets/lib/db.php';
 ?>
 
 <!DOCTYPE html>
