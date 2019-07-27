@@ -1,1 +1,0 @@
-<?php $dbh = new mysqli ('localhost','root', '', 'bdpa_class');
