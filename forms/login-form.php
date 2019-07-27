@@ -7,7 +7,7 @@
         <label for="email_id" class="col-md-2 col-form-label">Email ID</label>
         <div class="input-group mb-3 col-md-9">
           <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-envelope"></i></span></div>
-          <input type="email" class="form-control" id="email_id" name="email_id" autocomplete="off" value="<?php echo $email_id; ?>" required>
+          <input type="email" class="form-control" id="email_id" name="email_id" autocomplete="off" value="<?php if(isset($email_id)) {echo $email_id;}?>" required>
           <div class="invalid-feedback">Email ID is required</div>
         </div>
       </div>
