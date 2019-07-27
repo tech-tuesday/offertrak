@@ -33,7 +33,7 @@
 
 
 <?php
-	include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/tpl/app_footer.php';
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/web-assets/tpl/app_footer.php';
 ?>
 =======
 <form id="login" method="post" action="/offertrak/" autocomplete="false" class="needs-validation" novalidate>
