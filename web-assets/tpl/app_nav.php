@@ -1,41 +1,45 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title></title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> 
-	</head>
-	<body class="bg-light">
-		<main>
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a href="#" class="navbar-brand">Offertrak</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarCollapse">
-					<ul class="navbar-nav">
-						<li class="nav-item">
-							<a href="#" class="nav-link">Home</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a href="" class="nav-link dropdown-toggle" id="dropdownToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sign in</a>
-							<div class="pt-0 dropdown-menu" aria-labelledby="dropdownToggle">
-								<form class="m-2 ">
-									
-									<input type="text" class="mb-1 form-control" placeholder="Email">
-									<input type="password" class="mb-1 form-control" placeholder="Password">
-									<button type="submit" class="mb-1 btn btn-fluid btn-danger btn-block">Submit</button>
-								</form>
-								<div class="dropdown-divider"></div>
-									<a href="#" class="dropdown-item">Cancel</a>	
-							</div>
-						</li>
-					</ul>
-				</div>
-			</nav>
-		</main>
-		<!-- jQuery, Popper.js, Bootstrap -->
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	</body>
-</html>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <a
+class="navbar-brand" href="/bdpa-loans/dashboard.php">Loan Application</a>
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown"> <ul
+  class="navbar-nav">
+    <?php
+    $logged_in_options = "
+    <li class='nav-item active'> <a class='nav-link' href='/bdpa-loans/dashboard.php'>Home<span class='sr-only'>(current)</span></a></li>
+    <li class='nav-item'> <a class='nav-link' href='/bdpa-loans/forms/references_view.php'>References</a> </li>
+      <li class='nav-item dropdown'>
+        <a class='nav-link dropdown-toggle' href='#' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Profile</a>
+
+        <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
+          <p class='dropdown-item'>
+      ";
+
+            $cust_id = isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : null;
+            $display_sql = <<<SQL
+              SELECT * FROM customers WHERE customer_id = $cust_id;
+SQL;
+            $display_result = $dbh->query($display_sql);
+
+            if ($display_result) {
+              while ($row = $display_result->fetch_assoc()) {
+                $logged_in_options = $logged_in_options . " Name: " . $row['first_name'] . " " . $row['last_name'] . " ";
+              }
+            }
+
+
+        $logged_in_options = $logged_in_options . "</p>
+        <a class='dropdown-item'> <a class='btn btn-secondary' href='/bdpa-loans/index.php?action=logout' style='float: right; margin-right: 20px;'>Logout</a>";
+
+        if (isset($_SESSION['customer_id'])) {
+          echo $logged_in_options;
+        }
+          ?>
+        </a>
+      </div>
+
+    <form class="form-inline my-2 my-lg-0">
+
+    </form>
+  </div>
+</nav>
+<div class="container"> <br>
