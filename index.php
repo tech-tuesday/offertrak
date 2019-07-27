@@ -40,7 +40,7 @@
     }
   }
 
-  include_once $_SERVER['DOCUMENT_ROOT'] . '/web-assets/tpl/app_footer_class.php';
+  include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/web-assets/tpl/app_footer.php';
 
   function loginForm() {
     global $dbh;
