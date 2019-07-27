@@ -11,8 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-
+<<<<<<< HEAD
     <link rel="stylesheet" href="/offertrak/web-assets/css/bootstrap.min.css?>"> <!--I don't know why that href works necessarily. -->
+=======
+    <link rel="stylesheet" href="../../css/bootstrap.min.css"> <!--I don't know why that href works necessarily. -->
+>>>>>>> 3c4c12972599f1f16484d9a7be88e15ec60626bb
 
     <title><?php echo $page_title ?></title>
   </head>
