@@ -4,5 +4,5 @@
   setlocale(LC_ALL, 'en_US.UTF-8');
 
   # remember to use the username/password for your database
-  $dbh = new mysqli ('localhost','root', null, 'bdpa_class');
+  $dbh = new mysqli ('pathfinder.local','eddie', null, 'bdpa_class');
 ?>
