@@ -5,4 +5,5 @@
 
   # remember to use the username/password for your database
   $dbh = new mysqli ('pathfinder.local','eddie', null, 'bdpa_class');
+  include_once __DIR__ . '/functions.php';
 ?>
