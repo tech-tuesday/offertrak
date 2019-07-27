@@ -1,6 +1,6 @@
 <?php
   $page_title = "OfferTrak Inc";
-  include_once $_SERVER['DOCUMENT_ROOT'] . '/web-assets/tpl/app_header_class.php';
+  include_once $_SERVER['DOCUMENT_ROOT'] . '/web-assets/tpl/app_header.php';
   include_once $_SERVER['DOCUMENT_ROOT'] . '/web-assets/lib/db.php';
   # include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/gateway.php';
 
