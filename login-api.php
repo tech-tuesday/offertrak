@@ -52,8 +52,10 @@ if ( mysqli_num_rows($sth) > 0 ) {
   $sql2 = "update offertrak_users set last_login_date = now(), login_count = login_count+1 where user_id = $user_id limit 1";
   if ( !$sth = mysqli_query($dbh,$sql2) ){ errorHandler(mysqli_error($dbh), $sql2 ); return; }
 
-  # send user to the dashboard..
-  dashboardAPI();
+  # refresh to send user to the dashboard..
+  echo <<<HereDoc
+  <script>location.replace("/offertrak/");</script>
+HereDoc;
 
 } else {
   $fail_message = loginCheck($email_id);

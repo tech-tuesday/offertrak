@@ -68,6 +68,7 @@
   <div class="card-body">
     <div class="form-group">
       <input type="hidden" id="w" name="w" value="profile"/>
+      <input type="hidden" id="user_id" name="user_id" value="<?php echo $user_id; ?>"/>
       <input type="hidden" id="event" name="event" value="<?php echo $event; ?>"/>
       <button type="submit" class="btn btn-lg btn-success">Continue</button>
     </div>

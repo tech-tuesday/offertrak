@@ -1,3 +1,4 @@
+<div class="collapse navbar-collapse" id="navbarCollapse">
 <ul class="navbar-nav ml-auto mr-5">
   <li class="nav-item dropdown active">
     <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Navigator</a>
@@ -20,3 +21,4 @@
     </div>
   </li>
 </ul>
+</div>

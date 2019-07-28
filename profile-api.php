@@ -1,27 +1,18 @@
 <?php
 # get the values submitted from the website
-user_id
-email_id
-login_pw
-first_name
-last_name
-access_type
-agency_id
-login_count
-bad_login_count
-last_login_date
-password_modified
-active_sw
-
+$user_id = isset($_REQUEST['user_id']) ? preg_replace("/\D/",null,$_REQUEST['user_id']) : null;
+$email_id = isset($_REQUEST['email_id']) ? filter_var($_REQUEST['email_id'], FILTER_SANITIZE_EMAIL) : null;
 $login_pw = ( isset($_REQUEST['login_pw']) && validPassword($_REQUEST['login_pw'])) ? $_REQUEST['login_pw']  : null;
 $v_login_pw = (isset($_REQUEST['v_login_pw']) && validPassword($_REQUEST['v_login_pw'])) ? $_REQUEST['v_login_pw'] : null;
+$first_name = isset($_REQUEST['first_name']) ? $_REQUEST['first_name'] : null;
+$last_name = isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : null;
 
 $event = (isset($_REQUEST['event']) && !empty($_REQUEST['event'])) ? $_REQUEST['event'] : 'new';
 
 # error handling..
 $errors = array();
-# example..
 if ( empty($first_name) ) { $errors[] = 'First Name is required'; }
+if ( empty($last_name) ) { $errors[] = 'Last Name is required'; }
 
 # handle when this is an update as opposed to a new registration(signup)
 if ( $event == 'new' && empty($login_pw) ) { $errors[] = "Valid Password is required (8-16 alphanumeric/special characters)"; }
@@ -59,13 +50,10 @@ HereDoc;
   # prepare for database..
   $user_id = empty($user_id) ? 'NULL' : $user_id;
   $first_name = empty($first_name) ? 'NULL' : "\"$first_name\"";
-  $middle_name = empty($middle_name) ? 'NULL' : "\"$middle_name\"";
   $last_name = empty($last_name) ? 'NULL' : "\"$last_name\"";
   $email_id = empty($email_id) ? 'NULL' : "\"$email_id\"";
   $login_pw = empty($login_pw) ? 'NULL' : "\"$login_pw\"";
-  $pri_phone = empty($pri_phone) ? 'NULL' : "\"$pri_phone\"";
-  $user_type_cd = empty($user_type_cd) ? 'NULL' : $user_type_cd;
-  $industry_type_cd = empty($industry_type_cd) ? 'NULL' : "\"$industry_type_cd\"";
+  $access_type = empty($access_type) ? 'NULL' : $access_type;
 
   # SQL to save the data
   $add_sql =<<<HereDoc
@@ -80,7 +68,8 @@ HereDoc;
 $update_sql =<<<HereDoc
 update offertrak_users
 set
-
+  first_name = $first_name,
+  last_name = $last_name
 where user_id = $user_id
 limit 1
 

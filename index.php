@@ -19,9 +19,13 @@
     'applicant_f'   => 'applicantForm',
     'applicant'     => 'applicantAPI',
     'applicant_r'   => 'applicantReport',
+
     'job_offer_f'   => 'jobOfferForm',
     'job_offer'     => 'jobOfferAPI',
     'job_offer_r'   => 'jobOfferReport',
+
+    'jobs_f'        => 'jobsForm',
+    'jobs'          => 'jobsAPI',
     'jobs_r'        => 'jobsReport',
   );
 
@@ -160,3 +164,12 @@ HereDoc;
     include_once __DIR__ . '/jobs-report.php';
   }
 
+  function jobsForm() {
+    global $dbh;
+    include_once __DIR__ . '/forms/job-form.php';
+  }
+
+  function jobsAPI() {
+    global $dbh;
+    include_once __DIR__ . '/job-api.php';
+  }
