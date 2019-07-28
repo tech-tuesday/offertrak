@@ -16,7 +16,12 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
+<?php
+  # show navigation menu when user is logged in..
+  if ( isset($_SESSION['app_user']) && !empty($_SESSION['app_user']) ) {
+    include_once __DIR__ . '/logged-in-menu.php';
+  }
+?> 
 </nav>
 
 <main role="main" class="container-fluid">

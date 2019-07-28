@@ -2,7 +2,6 @@
   $page_title = "OfferTrak Inc";
   include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/web-assets/tpl/app_header.php';
   include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/web-assets/lib/db.php';
-  # include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/gateway.php';
 
   # this line captures the requested "action", it tells us what to do..
   $action = (isset($_REQUEST['w']) ? $_REQUEST['w'] : null);
@@ -30,7 +29,6 @@
 
   if (array_key_exists($action, $options)) {
     $function = $options[$action];
-    displayHeader();
     call_user_func($function);
   } else {
     if ( !empty($_SESSION['sid']) && !empty($_SESSION['user_id']) && !empty($_SESSION['app_user']) ) {
@@ -162,33 +160,3 @@ HereDoc;
     include_once __DIR__ . '/jobs-report.php';
   }
 
-  function displayHeader() {
-    echo <<<HereDoc
-   <div class="card-header mt-0">
-    Welcome to OfferTrak Inc
-
-    <ul class="nav float-right">
-      <li class="nav-item dropdown active">
-        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-lg fa-handshake white-text"></i> OfferTrack Portal</a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-          <a class="dropdown-item" href="/offertrak/">Dashboard</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/offertrak/?w=applicant_f"><i class="fas fa-user-plus mr-2"></i> Add Applicant</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/offertrak/?w=job_offer_r"><i class="fas fa-user-clock mr-2"></i> Job Offers</a>
-          <a class="dropdown-item" href="/offertrak/?w=jobs_r"><i class="fas fa-user-md mr-2"></i> Jobs</a>
-          <a class="dropdown-item" href="/offertrak/?w=applicant_r"><i class="fas fa-users mr-2"></i> Applicants</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-lg fa-user"></i> ${_SESSION['app_user']}</a>
-
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/offertrak/?w=profile_f">My Profile</a>
-          <a class="dropdown-item" href="/offertrak/?w=logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
-      </li>
-    </ul>
-  </div><br/>
-HereDoc;
-}
