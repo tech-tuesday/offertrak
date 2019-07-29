@@ -54,8 +54,9 @@ set
   last_name = $last_name,
   email_id = $email_id,
   agency_id = $agency_id,
-  bad_login_count = 0
-  active_sw = $active_sw
+  bad_login_count = 0,
+  active_sw = $active_sw,
+  lastmod = now()
 where user_id = $user_id
 limit 1
 

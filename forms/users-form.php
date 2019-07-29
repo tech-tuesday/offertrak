@@ -3,6 +3,7 @@
 <div class="card">
   <div class="card-header">Mange User Profile</div>
   <div class="card-body">
+    <p class="alert alert-primary">To Activate/Re-Activate a user: Set Status to Active</p>
 
     <div class="form-group row">
       <label for="first_name" class="col-md-3 col-form-label">First Name</label>
@@ -54,7 +55,7 @@
       <input type="hidden" id="w" name="w" value="users"/>
       <input type="hidden" id="user_id" name="user_id" value="<?php echo $user_id; ?>"/>
       <input type="hidden" id="access_type" name="access_type" value="<?php echo $access_type; ?>"/>
-      <button type="submit" class="btn btn-success">Continue</button>
+      <button type="submit" class="btn btn-success">Submit</button>
     </div>
   </div>
 </div>

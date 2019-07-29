@@ -1,7 +1,6 @@
 <form id="job-offer" method="post" action="/offertrak/" class="needs-validation" novalidate>
-<div class="jumbotron" id="joboffer">
-<div class="card">
-  <div class="card-header">Job Offer</div>
+<div class="card" id="joboffer">
+  <div class="card-header">Job Offer <small><a class="float-right" href="/offertrak/?w=applicant_f&amp;applicant_id=<?php echo $applicant_id; ?>">View Applicant</a></small></div>
   <div class="card-body">
 
     <div class="form-group row">
@@ -29,11 +28,13 @@
     <div class="form-group">
       <input type="hidden" id="w" name="w" value="job_offer"/>
       <input type="hidden" id="offer_id" name="offer_id" value="<?php echo $offer_id; ?>"/>
-      <button type="submit" class="btn btn-primary">Update</button>
+      <input type="hidden" id="applicant_id" name="applicant_id" value="<?php echo $applicant_id; ?>"/>
+      <input type="hidden" id="event" name="event" value="<?php echo $event; ?>"/>
+      <button type="submit" class="btn btn-primary">Continue</button>
     </div>
   </div>
-</div>
-</div>
+</div><br/>
 
 </form>
+<?php if ( $offer_id ) { calculateCosts($applicant_id,$salary_offered,$display=1); } ?>
 

@@ -279,7 +279,7 @@ HereDoc;
 
   if (!$sth = mysqli_query($dbh,$sql)) { errorHandler(mysqli_error($dbh),$sql); return; }
 
-  $required = ( $_SESSION['access_type'] == 'R' ) ? ' required' : null;
+  $required = ( empty($_SESION['access_type']) || $_SESSION['access_type'] == 'R' ) ? ' required' : null;
   echo <<<HereDoc
 <select class="form-control" name="agency_id" id="agency_id"$required>
   <option></option>
@@ -365,3 +365,95 @@ function prettyStr($str) {
 
   return $str;
 }
+
+function calculateCosts($applicant_id,$salary_offered,$display=null) {
+  global $dbh;
+
+  $sql = "select filing_status_cd from offertrak_applicants where applicant_id = $applicant_id";
+  $filing_status_cd = fetch_one($sql,'filing_status_cd');
+
+  $sql =<<<HereDoc
+select 
+  a.tax_rate 
+from offertrak_tax_table a
+left join (
+  select 
+    income_range_min, 
+    ($salary_offered - income_range_min)
+  from offertrak_tax_table
+  where filing_status_cd = $filing_status_cd
+  and ($salary_offered - income_range_min) > 1
+  order by 2 asc
+  limit 1
+) b on a.income_range_min = b.income_range_min
+left join (
+  select 
+    income_range_max, 
+    ($salary_offered - income_range_max)
+  from offertrak_tax_table
+  where filing_status_cd = $filing_status_cd
+  and ($salary_offered - income_range_max) < 1
+  order by 2 desc
+  limit 1
+) c on a.income_range_max = c.income_range_max
+where a.filing_status_cd = $filing_status_cd 
+and a.income_range_min = b.income_range_min
+and a.income_range_max = c.income_range_max
+
+HereDoc;
+
+  $tax_rate = fetch_one($sql,'tax_rate');
+
+  $insurance_cost = $salary_offered * 0.14;
+  $workers_comp = $salary_offered * 0.08;
+  $recruiter_fees = $salary_offered * 0.11;
+  $travel_expenses = 1500;
+  $taxes = $salary_offered * $tax_rate/100;
+
+  $agency_costs = ($insurance_cost + $workers_comp + $recruiter_fees + $travel_expenses + $taxes);
+
+  /*
+  Insurance costs are 14% of offered salary
+  Workers compensation are 8% of offered salary
+  Taxes (see Tax Rates in the table below)
+  multiply the salary x percentage tax rate to determine the amount of taxes
+  Recruiter or agency fees are 11% of the offered salary
+  Travel expenses are capped at $1500
+  */
+
+  if ($display) {
+
+    $insurance_cost_str = number_format($insurance_cost,2);
+    $workers_comp_str = number_format($workers_comp,2);
+    $recruiter_fees_str = number_format($recruiter_fees,2);
+    $travel_expenses_str = number_format($travel_expenses,2);
+    $salary_offered_str = number_format($salary_offered,2);
+    $agency_costs_str = number_format($agency_costs,2);
+    $taxes_str = number_format($taxes,2);
+
+    echo <<<HereDoc
+<div class="card">
+  <div class="card-header">Agency Costs Analysis</div>
+  <div class="card-body">
+  <table class="table table-sm table-hover col-md-4">
+    <tr><th>Item</th><th class="text-right pr-5">Cost (USD)</th></tr>
+    <tr><td>Salary</td><th class="text-right pr-5">$salary_offered_str</th></tr>
+    <tr><td>Insurance</td><td class="text-right pr-5">$insurance_cost_str</td></tr>
+    <tr><td>Workers Comp</td><td class="text-right pr-5">$workers_comp_str</td></tr>
+    <tr><td>Recruiter Fees</td><td class="text-right pr-5">$recruiter_fees_str</td></tr>
+    <tr><td>Travel Expenses</td><td class="text-right pr-5">$travel_expenses_str</td></tr>
+    <tr><td>Tax Rate</td><td class="text-right pr-5">$tax_rate %</td></tr>
+    <tr><td>Taxes</td><td class="text-right pr-5">$taxes_str</td></tr>
+    <tr><th>Total</th><th class="text-right pr-5">$ $agency_costs_str</th></tr>
+  </table>
+  </div>
+</div>
+
+HereDoc;
+  } else {
+    return $agency_costs;
+  }
+}
+
+
+

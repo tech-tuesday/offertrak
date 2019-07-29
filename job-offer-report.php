@@ -28,8 +28,8 @@ if ( mysqli_num_rows($sth) > 0 ) {
 <tr>
   <th>Job</th>
   <th>Location</th>
-  <th>Salary</th>
-  <th>Costs</th>
+  <th class="text-right pr-5">Salary (USD)</th>
+  <th class="text-right pr-5">Costs (USD)</th>
   <th>Offer Date</th>
 </tr>
 
@@ -40,12 +40,15 @@ HereDoc;
       $$key = $val;
     }
 
+    $salary_offered_str = number_format($salary_offered,2);
+    $agency_cost_str = number_format($agency_cost,2);
+
     echo <<<HereDoc
 <tr class="clickable-row glow" data-href="/offertrak/?w=job_offer_f&amp;offer_id=$offer_id">
   <td>$job_title</td>
   <td>$city_name, $state_cd</td>
-  <td>$salary_offered_str</td>
-  <td>$agency_cost</td>
+  <td class="text-right pr-5">$salary_offered_str</td>
+  <td class="text-right pr-5">$agency_cost_str</td>
   <td>$offer_datetime</td>
 </tr>
 

@@ -67,7 +67,7 @@
   }
 
   function pwResetForm() {
-    global $dbh;
+    global $dbh, $email_id;
     include_once __DIR__ . '/forms/pw-reset-form.php';
   }
 
@@ -251,6 +251,34 @@ HereDoc;
       $offer_datetime,
       $salary_offered,
       $event;
+
+    $offer_id = (isset($_REQUEST['offer_id']) && !empty($_REQUEST['offer_id'])) ? preg_replace("/\D/",null,$_REQUEST['offer_id']) : null;
+    $applicant_id = (isset($_REQUEST['applicant_id']) && !empty($_REQUEST['applicant_id'])) ? preg_replace("/\D/",null,$_REQUEST['applicant_id']) : null;
+    $event = (isset($_REQUEST['event']) && !empty($_REQUEST['event'])) ? $_REQUEST['event'] : 'new';
+
+    if ( $offer_id ) {
+      $sql =<<<HereDoc
+select
+  applicant_id,
+  job_id,
+  offer_datetime,
+  salary_offered,
+  agency_cost,
+  'update' as event
+from offertrak_job_offer
+where offer_id = $offer_id
+
+HereDoc;
+
+      if ( !$sth = mysqli_query($dbh,$sql) ) { errorHandler(mysqli_error($dbh), $sql); return; }
+
+      while ( $row = mysqli_fetch_array($sth) ) {
+        foreach ( $row as $key => $val ) {
+          $$key = $val;
+        }
+      }
+    }
+
     include_once __DIR__ . '/forms/job-offer-form.php';
   }
 

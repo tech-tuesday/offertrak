@@ -1,4 +1,5 @@
 <?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/web-assets/lib/gateway.php';
 # applicant count..
 $sql = "select count(*) as applicant_count from offertrak_applicants";
 $applicant_count = fetch_one($sql,'applicant_count');

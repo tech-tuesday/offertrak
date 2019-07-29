@@ -4,8 +4,8 @@ $user_id = isset($_REQUEST['user_id']) ? preg_replace("/\D/",null,$_REQUEST['use
 $email_id = isset($_REQUEST['email_id']) ? filter_var($_REQUEST['email_id'], FILTER_SANITIZE_EMAIL) : null;
 $login_pw = ( isset($_REQUEST['login_pw']) && validPassword($_REQUEST['login_pw'])) ? $_REQUEST['login_pw']  : null;
 $v_login_pw = (isset($_REQUEST['v_login_pw']) && validPassword($_REQUEST['v_login_pw'])) ? $_REQUEST['v_login_pw'] : null;
-$first_name = isset($_REQUEST['first_name']) ? $_REQUEST['first_name'] : null;
-$last_name = isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : null;
+$first_name = isset($_REQUEST['first_name']) ? prettyStr($_REQUEST['first_name']) : null;
+$last_name = isset($_REQUEST['last_name']) ? prettyStr($_REQUEST['last_name']) : null;
 $agency_id = isset($_REQUEST['agency_id']) ? preg_replace("/\D/",null,$_REQUEST['agency_id']) : null;
 
 $event = (isset($_REQUEST['event']) && !empty($_REQUEST['event'])) ? $_REQUEST['event'] : 'new';
@@ -54,7 +54,6 @@ HereDoc;
   $last_name = empty($last_name) ? 'NULL' : "\"$last_name\"";
   $email_id = empty($email_id) ? 'NULL' : "\"$email_id\"";
   $login_pw = empty($login_pw) ? 'NULL' : "\"$login_pw\"";
-  $access_type = empty($access_type) ? 'NULL' : $access_type;
   $agency_id = empty($agency_id) ? 'NULL' : $agency_id;
 
   # SQL to save the data
@@ -79,9 +78,9 @@ insert into offertrak_users (
   $login_pw,
   $first_name,
   $last_name,
-  $access_type,
+  'R', -- this is the default
   $agency_id,
-  null,
+  0,
   0,
   null,
   null,
@@ -123,7 +122,6 @@ HereDoc;
 
     # take the user back to the form..
     profileForm();
-
   }
 }
 

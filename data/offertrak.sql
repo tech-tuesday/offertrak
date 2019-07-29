@@ -240,7 +240,7 @@ create table if not exists offertrak_job_offer (
   job_id int(11) not null,
   offer_datetime datetime not null,
   salary_offered decimal(15,2) not null,
-  agency_cost decimal(9,2) not null,
+  agency_cost decimal(15,2) not null,
   lastmod timestamp not null default current_timestamp on update current_timestamp,
   primary key (offer_id),
   unique key (applicant_id,job_id),
