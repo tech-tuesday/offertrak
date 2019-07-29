@@ -1,6 +1,7 @@
 <?php 
 $sql =<<<HereDoc
 select
+  a.job_id,
   a.job_title,
   a.city_name,
   a.state_cd,
@@ -28,11 +29,12 @@ HereDoc;
   There are no jobs in the database.
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
-  </button>
+  </button><br/>
+  <a class="card-link" href="/offertrak/?w=jobs_f">Add a Job</a>
 </div><br/>
-<a class="btn btn-primary col-md-3" role="button" href="/offertrak/">Return</a>
 
 HereDoc;
+  dashboardAPI();
   return;
 }
 
@@ -42,9 +44,9 @@ while ( $row = mysqli_fetch_array($sth) ) {
   }
 
   echo <<<HereDoc
-<tr>
+<tr class="clickable-row glow" data-href="/offertrak/?w=jobs_f&amp;job_id=$job_id">
   <td>$job_title</td>
-  <td>$city, $state_cd</td>
+  <td>$city_name, $state_cd</td>
   <td>$job_category_id_desc</td>
 </tr>
 

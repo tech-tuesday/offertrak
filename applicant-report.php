@@ -10,6 +10,7 @@ select
 from offertrak_applicants a
 left join offertrak_job_offer b on a.applicant_id = b.applicant_id
 left join offertrak_jobs c on b.job_id
+order by 2 asc
 
 HereDoc;
 
@@ -47,11 +48,11 @@ while ( $row = mysqli_fetch_array($sth) ) {
   }
 
   echo <<<HereDoc
-<tr>
+<tr class="clickable-row glow" data-href="/offertrak/?w=applicant_f&amp;applicant_id=$applicant_id">
   <td>$applicant</td>
   <td>$job_title</td>
   <td>$location</td>
-  <td>$salary</td>
+  <td>$salary_offered</td>
   <td>$offer_datetime</td>
 </tr>
 

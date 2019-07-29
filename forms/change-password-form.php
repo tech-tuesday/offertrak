@@ -33,7 +33,7 @@
       <input type="hidden" id="w" name="w" value="change_pw"/>
       <input type="hidden" id="email_id" name="email_id" value="<?php echo $email_id; ?>"/>
       <input type="hidden" id="event" name="event" value="update"/>
-      <button type="submit" class="btn btn-lg btn-primary">Update Password</button>
+      <button type="submit" class="btn btn-primary">Update Password</button>
     </div>
 
   </div>

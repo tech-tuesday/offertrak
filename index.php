@@ -1,4 +1,5 @@
 <?php
+  error_reporting(E_ALL);
   $page_title = "OfferTrak Inc";
   include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/web-assets/tpl/app_header.php';
   include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/web-assets/lib/db.php';
@@ -15,6 +16,10 @@
     'change_pw'     => 'changePWAPI',
     'profile_f'     => 'profileForm',
     'profile'       => 'profileAPI',
+     # manage users..
+    'users_r'       => 'usersReport',
+    'users'         => 'usersAPI',
+    'users_f'       => 'usersForm',
 
     'applicant_f'   => 'applicantForm',
     'applicant'     => 'applicantAPI',
@@ -45,7 +50,9 @@
   include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/web-assets/tpl/app_footer.php';
 
   function loginForm() {
-    global $dbh;
+    global $dbh,
+      $email_id,
+      $login_pw;
     include_once __DIR__ . '/forms/login-form.php';
   }
 
@@ -88,11 +95,6 @@
       $last_name,
       $access_type,
       $agency_id,
-      $login_count,
-      $bad_login_count,
-      $last_login_date,
-      $password_modified,
-      $active_sw,
       $event;
 
     $event = (isset($_REQUEST['event']) && !empty($_REQUEST['event'])) ? $_REQUEST['event'] : 'new';
@@ -109,6 +111,7 @@ select
   'update' as event
 from offertrak_users
 where user_id=$user_id
+
 HereDoc;
 
       if ( !$sth = mysqli_query($dbh, $sql) ) { errorHandler(mysqli_error($dbh), $sql, 0); return; }
@@ -129,8 +132,104 @@ HereDoc;
     include_once __DIR__ . '/profile-api.php';
   }
 
-  function applicantForm() {
+  function usersForm() {
+    global $dbh,
+      $user_id,
+      $email_id,
+      $first_name,
+      $last_name,
+      $access_type,
+      $agency_id,
+      $active_sw;
+
+    if ( isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id']) ) {
+      $user_id = preg_replace("/\D/",null,$_REQUEST['user_id']);
+      $sql =<<<HereDoc
+select
+  first_name,
+  last_name,
+  email_id,
+  access_type,
+  agency_id,
+  active_sw
+from offertrak_users
+where user_id=$user_id
+
+HereDoc;
+
+      if ( !$sth = mysqli_query($dbh, $sql) ) { errorHandler(mysqli_error($dbh), $sql, 0); return; }
+
+      if ( mysqli_num_rows($sth) > 0 ) {
+        while ($row = mysqli_fetch_array($sth)) {
+          foreach ($row AS $key => $val) {
+            $$key = stripslashes($val);
+          }
+        }
+      }
+    }
+    include_once __DIR__ . '/forms/users-form.php';
+  }
+
+  function usersAPI() {
     global $dbh;
+    include_once __DIR__ . '/users-api.php';
+  }
+  function usersReport() {
+    global $dbh;
+    include_once __DIR__ . '/users-report.php';
+  }
+
+  function applicantForm() {
+    global $dbh,
+      $applicant_id,
+      $first_name,
+      $last_name,
+      $filing_status_cd,
+      $contact_type_cd,
+      $coverletter_sw,
+      $resume_sw,
+      $reference_sw,
+      $reference_checked_sw,
+      $offer_id,
+      $job_id,
+      $salary_offered,
+      $event;
+
+    $event = (isset($_REQUEST['event']) && !empty($_REQUEST['event'])) ? $_REQUEST['event'] : 'new';
+    $applicant_id = (isset($_REQUEST['applicant_id']) && !empty($_REQUEST['applicant_id'])) ? preg_replace("/\D/",null,$_REQUEST['applicant_id']) : null;
+
+    # if the call is to create a new applicant, applicant_id will be null.
+    # otherwise, if applicant_id exists we are probably editing the record..
+
+    if ($applicant_id) {
+      $sql =<<<HereDoc
+select
+  a.first_name,
+  a.last_name,
+  a.filing_status_cd,
+  a.contact_type_cd,
+  a.coverletter_sw,
+  a.resume_sw,
+  a.reference_sw,
+  a.reference_checked_sw,
+  b.offer_id,
+  b.job_id,
+  b.salary_offered,
+  'update' as event
+from offertrak_applicants a
+left join offertrak_job_offer b on a.applicant_id = b.applicant_id
+where a.applicant_id = $applicant_id
+
+HereDoc;
+
+      if ( !$sth = mysqli_query($dbh,$sql) ) { errorHandler(mysqli_error($dbh), $sql); return; }
+
+      while ( $row = mysqli_fetch_array($sth) ) {
+        foreach ( $row as $key => $val ) {
+          $$key = $val;
+        }
+      }
+    }
     include_once __DIR__ . '/forms/applicant-form.php';
   }
 
@@ -145,7 +244,13 @@ HereDoc;
   }
 
   function jobOfferForm() {
-    global $dbh;
+    global $dbh,
+      $offer_id,
+      $applicant_id,
+      $job_id,
+      $offer_datetime,
+      $salary_offered,
+      $event;
     include_once __DIR__ . '/forms/job-offer-form.php';
   }
 
@@ -165,7 +270,42 @@ HereDoc;
   }
 
   function jobsForm() {
-    global $dbh;
+    global $dbh,
+      $job_id,
+      $job_category_id,
+      $job_title,
+      $city_name,
+      $state_cd,
+      $event;
+
+    $event = (isset($_REQUEST['event']) && !empty($_REQUEST['event'])) ? $_REQUEST['event'] : 'new';
+    $job_id = (isset($_REQUEST['job_id']) && !empty($_REQUEST['job_id'])) ? preg_replace("/\D/",null,$_REQUEST['job_id']) : null;
+
+    # if the call is to create a new job, job_id will be null.
+    # otherwise, if job_id exists we are probably editing the record..
+
+    if ($job_id) {
+      $sql =<<<HereDoc
+select
+  job_id,
+  job_category_id,
+  job_title,
+  city_name,
+  state_cd,
+  'update' as event
+from offertrak_jobs
+where job_id = $job_id
+
+HereDoc;
+
+      if ( !$sth = mysqli_query($dbh,$sql) ) { errorHandler(mysqli_error($dbh), $sql); return; }
+
+      while ( $row = mysqli_fetch_array($sth) ) {
+        foreach ( $row as $key => $val ) {
+          $$key = $val;
+        }
+      }
+    }
     include_once __DIR__ . '/forms/job-form.php';
   }
 

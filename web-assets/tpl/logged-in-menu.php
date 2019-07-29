@@ -6,10 +6,15 @@
       <a class="dropdown-item" href="/offertrak/">Dashboard</a>
       <div class="dropdown-divider"></div>
       <a class="dropdown-item" href="/offertrak/?w=applicant_f">Add Applicant</a>
+      <a class="dropdown-item" href="/offertrak/?w=jobs_f">Add Job</a>
       <div class="dropdown-divider"></div>
       <a class="dropdown-item" href="/offertrak/?w=job_offer_r">Job Offers</a>
       <a class="dropdown-item" href="/offertrak/?w=jobs_r">Jobs</a>
       <a class="dropdown-item" href="/offertrak/?w=applicant_r">Applicants</a>
+      <?php if ( $_SESSION['access_type'] == 'A' ) { ?>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="/offertrak/?w=users_r">Manage Users</a>
+      <?php } ?>
     </div>
   </li>
   <li class="nav-item dropdown">

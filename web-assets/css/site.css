@@ -25,6 +25,7 @@ a#scroll-up:hover {
 }
 .clickable-row {cursor:pointer;}
 .glow:hover { background-color:#e7e7e7; }
+.card-header { font-weight:700; font-size:105%; color:#888; }
 .footer {
   position: absolute;
   bottom: 0;

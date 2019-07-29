@@ -5,17 +5,12 @@ $login_pw = (isset($_REQUEST['login_pw'])) ? $_REQUEST['login_pw'] : null;
 # encrypt the password..
 $login_pw = md5($login_pw);
 
-$host_ip = $_SERVER['REMOTE_ADDR'];
-$host_address = gethostbyaddr($host_ip);
-$browser_app = $_SERVER['HTTP_USER_AGENT'];
-
 # authenticate user..
 $sql =<<<HereDoc
 select
   user_id,
   access_type,
   concat_ws(' ',first_name,last_name) as app_user,
-  login_pw,
   date_format(last_login_date,'%m/%d/%Y %r') as last_login_date
 from offertrak_users
 where email_id = '$email_id'
