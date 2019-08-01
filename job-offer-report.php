@@ -28,9 +28,9 @@ if ( mysqli_num_rows($sth) > 0 ) {
 <tr>
   <th>Job</th>
   <th>Location</th>
-  <th class="text-right pr-5">Salary (USD)</th>
-  <th class="text-right pr-5">Costs (USD)</th>
-  <th>Offer Date</th>
+  <th class="d-none d-lg-md-table-cell text-right pr-5">Salary (USD)</th>
+  <th class="d-none d-lg-lg-table-cell text-right pr-5">Costs (USD)</th>
+  <th class="d-none d-lg-table-cell">Offer Date</th>
 </tr>
 
 HereDoc;
@@ -47,9 +47,9 @@ HereDoc;
 <tr class="clickable-row glow" data-href="/offertrak/?w=job_offer_f&amp;offer_id=$offer_id">
   <td>$job_title</td>
   <td>$city_name, $state_cd</td>
-  <td class="text-right pr-5">$salary_offered_str</td>
-  <td class="text-right pr-5">$agency_cost_str</td>
-  <td>$offer_datetime</td>
+  <td class="d-none d-md-table-cell text-right pr-5">$salary_offered_str</td>
+  <td class="d-none d-lg-table-cell text-right pr-5">$agency_cost_str</td>
+  <td class="d-none d-lg-table-cell">$offer_datetime</td>
 </tr>
 
 HereDoc;

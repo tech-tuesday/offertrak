@@ -19,7 +19,7 @@ if ( mysqli_num_rows($sth) > 0 ) {
 <tr>
   <th>Job</th>
   <th>Location</th>
-  <th>Category</th>
+  <th class="d-none d-md-table-cell">Category</th>
 </tr>
 
 HereDoc;
@@ -47,7 +47,7 @@ while ( $row = mysqli_fetch_array($sth) ) {
 <tr class="clickable-row glow" data-href="/offertrak/?w=jobs_f&amp;job_id=$job_id">
   <td>$job_title</td>
   <td>$city_name, $state_cd</td>
-  <td>$job_category_id_desc</td>
+  <td class="d-none d-md-table-cell">$job_category_id_desc</td>
 </tr>
 
 HereDoc;

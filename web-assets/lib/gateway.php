@@ -9,7 +9,7 @@ if ( empty($_SESSION['sid']) || empty($_SESSION['user_id']) || empty($_SESSION['
 </div><br/>
 HereDoc;
 
-  include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/forms/login-form.php';
+  loginForm();
   include_once $_SERVER['DOCUMENT_ROOT'] . '/offertrak/web-assets/tpl/app_footer.php';
   exit;
 }

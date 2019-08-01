@@ -27,9 +27,9 @@ if ( mysqli_num_rows($sth) > 0 ) {
 <table class="table table-sm table-hover container">
 <tr>
   <th>Applicant</th>
-  <th>Tax Filing Status</th>
-  <th>Recruiting Source</th>
-  <th>Job Offers</th>
+  <th class="d-none d-lg-table-cell">Tax Filing Status</th>
+  <th class="d-none d-md-table-cell">Recruiting Source</th>
+  <th class="text-center">Job Offers</th>
 </tr>
 
 HereDoc;
@@ -55,9 +55,9 @@ while ( $row = mysqli_fetch_array($sth) ) {
   echo <<<HereDoc
 <tr class="clickable-row glow" data-href="/offertrak/?w=applicant_f&amp;applicant_id=$applicant_id">
   <td>$applicant</td>
-  <td>$filing_status_cd_desc</td>
-  <td>$contact_type_cd_desc</td>
-  <td>$job_offers</td>
+  <td class="d-none d-lg-table-cell">$filing_status_cd_desc</td>
+  <td class="d-none d-md-table-cell">$contact_type_cd_desc</td>
+  <td class="text-center">$job_offers</td>
 </tr>
 
 HereDoc;

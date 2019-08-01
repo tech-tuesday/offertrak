@@ -22,10 +22,10 @@ if ( mysqli_num_rows($sth) > 0 ) {
 <table class="table table-sm table-hover">
 <tr>
   <th>Recruiter</th>
-  <th>Email</th>
-  <th>Agency</th>
-  <th>Latest Login</th>
-  <th>Password Updated</th>
+  <th class="d-none d-lg-table-cell">Email</th>
+  <th class="d-none d-md-table-cell">Agency</th>
+  <th class="d-none d-md-table-cell">Latest Login</th>
+  <th class="d-none d-lg-table-cell">Password Updated</th>
   <th>Status</th>
 </tr>
 
@@ -55,10 +55,10 @@ while ( $row = mysqli_fetch_array($sth) ) {
   echo <<<HereDoc
 <tr class="clickable-row glow$row_class" data-href="/offertrak/?w=users_f&amp;user_id=$user_id">
   <td>$first_name $last_name</td>
-  <td>$email_id</td>
-  <td>$agency_name</td>
-  <td>$last_login_date</td>
-  <td>$password_modified</td>
+  <td class="d-none d-lg-table-cell">$email_id</td>
+  <td class="d-none d-md-table-cell">$agency_name</td>
+  <td class="d-none d-md-table-cell">$last_login_date</td>
+  <td class="d-none d-lg-table-cell">$password_modified</td>
   <td>$active_sw_str</td>
 </tr>
 
